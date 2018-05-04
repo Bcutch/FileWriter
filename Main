@@ -6,6 +6,8 @@ import java.lang.*;
 
 public class Main {
 
+    private static String NEWLINE = System.getProperty("line.separator");
+
     public static void main(String[] args) {
         File FILE = new File("uInfo.txt");
 
@@ -46,9 +48,32 @@ public class Main {
             }
         }
 
-        System.out.println("...");
-        System.out.println(FirstName + LastName + Age);
+        String output = FirstName + " " + LastName + " " + Age;
 
+        Random rand = new Random();
+
+        int rlnt = rand.nextInt(100) + 1;
+
+        try {
+
+            if (FILE.canWrite()) {
+                BufferedWriter fileOut = new BufferedWriter(new FileWriter(FILE));
+
+                for (int i = 0; i < rlnt; i++) {
+                    fileOut.write(output + NEWLINE);
+                }
+                fileOut.close();
+            }
+            else {
+                throw new IOException();
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.err.format("FileNotFoundException: %s%n", e);
+        }
+        catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
 
     }//end method
 }//end class
